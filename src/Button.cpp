@@ -43,7 +43,7 @@ ButtonState Button::getState() {
 
         return BUTTON_STATE_UNKNOWN;
     } else {
-        if (_counter < sizeof(uint32_t)) {
+        if (_counter < UINT32_MAX) {
             _counter++;
         }
 
