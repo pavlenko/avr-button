@@ -8,7 +8,7 @@
 #endif
 
 #ifndef BUTTON_HOLD_THRESHOLD
-#define BUTTON_HOLD_THRESHOLD 16000000UL
+#define BUTTON_HOLD_THRESHOLD 100000UL
 #endif
 
 enum ButtonMode {

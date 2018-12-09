@@ -73,6 +73,7 @@ void Button::dispatch() {
             BUTTON_BIT_WRITE(_state, BUTTON_BIT_ON_PRESS, _onPressHandler(*this));
         }
 
+        //TODO check time diff instead of iterations count for more proper intervals usage
         if (_onHoldHandler && !BUTTON_BIT_READ(_state, BUTTON_BIT_ON_HOLD) && _counter >= BUTTON_HOLD_THRESHOLD) {
             BUTTON_BIT_WRITE(_state, BUTTON_BIT_ON_HOLD, _onHoldHandler(*this));
         }
