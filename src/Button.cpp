@@ -3,7 +3,6 @@
 #define BUTTON_BIT_CURRENT    0
 #define BUTTON_BIT_PREVIOUS   1
 #define BUTTON_BIT_ON_PRESS   2
-#define BUTTON_BIT_ON_HOLD    3
 #define BUTTON_BIT_ON_RELEASE 4
 
 #define BUTTON_BIT_READ(_byte_, _bit_)           (((_byte_) >> (_bit_)) & 0x01)
@@ -39,7 +38,6 @@ ButtonState Button::getState() {
         // Clear callback triggered flags
         BUTTON_BIT_CLEAR(_state, BUTTON_BIT_ON_PRESS);
         BUTTON_BIT_CLEAR(_state, BUTTON_BIT_ON_RELEASE);
-        BUTTON_BIT_CLEAR(_state, BUTTON_BIT_ON_HOLD);
 
         return BUTTON_STATE_UNKNOWN;
     } else {
@@ -72,11 +70,6 @@ void Button::dispatch() {
         if (_onPressHandler && !BUTTON_BIT_READ(_state, BUTTON_BIT_ON_PRESS)) {
             BUTTON_BIT_WRITE(_state, BUTTON_BIT_ON_PRESS, _onPressHandler(*this));
         }
-
-        //TODO check time diff instead of iterations count for more proper intervals usage
-        if (_onHoldHandler && !BUTTON_BIT_READ(_state, BUTTON_BIT_ON_HOLD) && _counter >= BUTTON_HOLD_THRESHOLD) {
-            BUTTON_BIT_WRITE(_state, BUTTON_BIT_ON_HOLD, _onHoldHandler(*this));
-        }
     }
 
     if (BUTTON_STATE_RELEASED == state) {
@@ -86,18 +79,10 @@ void Button::dispatch() {
     }
 }
 
-void Button::setCounter(uint32_t value) {
-    _counter = value;
-}
-
 void Button::setOnPressHandler(ButtonEventHandler_t handler) {
     _onPressHandler = handler;
 }
 
 void Button::setOnReleaseHandler(ButtonEventHandler_t handler) {
     _onReleaseHandler = handler;
-}
-
-void Button::setOnHoldHandler(ButtonEventHandler_t handler) {
-    _onHoldHandler = handler;
 }

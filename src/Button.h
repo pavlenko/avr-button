@@ -7,10 +7,6 @@
 #define BUTTON_DEBRIEF_THRESHOLD 100UL
 #endif
 
-#ifndef BUTTON_HOLD_THRESHOLD
-#define BUTTON_HOLD_THRESHOLD 100000UL
-#endif
-
 enum ButtonMode {
     BUTTON_MODE_PULL_DOWN,
     BUTTON_MODE_PULL_UP,
@@ -32,11 +28,10 @@ private:
     uint8_t _pin;
     ButtonMode _mode;
     uint8_t _state;
-    uint32_t _counter = 0;
+    uint8_t _counter = 0;
 
     ButtonEventHandler_t _onPressHandler;
     ButtonEventHandler_t _onReleaseHandler;
-    ButtonEventHandler_t _onHoldHandler;
 public:
     /**
      * @param port
@@ -58,11 +53,6 @@ public:
     void dispatch();
 
     /**
-     * @param value
-     */
-    void setCounter(uint32_t value);
-
-    /**
      * @param handler
      */
     void setOnPressHandler(ButtonEventHandler_t handler);
@@ -71,11 +61,6 @@ public:
      * @param handler
      */
     void setOnReleaseHandler(ButtonEventHandler_t handler);
-
-    /**
-     * @param handler
-     */
-    void setOnHoldHandler(ButtonEventHandler_t handler);
 };
 
 #endif //BUTTON_H

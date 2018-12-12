@@ -1,6 +1,5 @@
 // You can override default thresholds
 #define BUTTON_DEBRIEF_THRESHOLD 100UL
-#define BUTTON_HOLD_THRESHOLD 16000000UL
 
 #include <Button.h>
 
@@ -16,14 +15,6 @@ bool onReleaseHandler(Button &button) {
     return true;
 }
 
-bool onHoldHandler(Button &button) {
-    // You can set threshold for repeat call handler
-    button.setCounter(8000000UL);
-
-    // Do some stuff
-    return true;//<-- Return true for execute handler only once after button state changed
-}
-
 int main() {
     // Initialize buttons
     Button button1 = Button(&PORTA, PIN0, BUTTON_MODE_PULL_UP);   //<-- Button connected to GND
@@ -32,7 +23,6 @@ int main() {
     // You can set handler callbacks for dispatch later
     button2.setOnPressHandler(onPressHandler);
     button2.setOnReleaseHandler(onReleaseHandler);
-    button2.setOnHoldHandler(onHoldHandler);
 
     while (true) {
         // Now You can check button state and execute some code depends on state
